@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/png" href="/favicon.png" />
+
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+		integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+
+
+
+
+	<title>Real Estate Seller Form</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="/form/styleFilters.css">
+</head>
+
+<body onload="checkInsert()">
+	<div class="main-filters">
+		<div class="about-header-image-bg">
+			<nav class="navbar navbar-expand-lg navbar-light kleinbot-header">
+				<div class="container">
+					<a class="navbar-brand" href="//localhost:3000/kleinbot"><img
+							style="width: 150px; margin-right: 3rem;"
+							src="http://localhost:3000/kleinbot/resources/kleinbot-header-logo-pink-gold2.png"></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto kleinbot-header-container">
+							<li class="nav-item active">
+								<a class="nav-link" href="//localhost:3000/kleinbot">Home <span
+										class="sr-only">(current)</span></a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="//localhost:3000/kleinbot/about.html">About</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="//localhost:3000/kleinbot/contact.html">Contact</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="//localhost/form">Property Registration</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div id="insertSuccess" style="display:none">
+		Inserted Successfully
+	</div>
+
+	<section class="container">
+		<p id="intro">Please fill in the form regarding your and your property's information. All fileds are required.
+		</p>
+		<form class="container" method="post" action="connect.php" enctype="multipart/form-data">
+
+			<div class="box">
+				<label>First Name</label><br>
+				<input type="text" name="Name" placeholder="Enter First Name" required><br>
+				<label>Last Name</label><br>
+				<input type="text" name="LastName" placeholder="Enter Last Name" required><br>
+				<label>Phone Number</label><br>
+				<input type="number" name="Phone" placeholder="Enter Phone Number" required><br>
+				<label>Email</label><br>
+				<input type="email" name="Email" placeholder="Enter Email" required><br>
+				<label>City</label><br>
+				<!-- <input type="text" name="City" placeholder="Enter City of Property" required><br> -->
+				<select id="city-dropdown" name="City" required></select><br>
+				<label>Area</label><br>
+				<select id="locality-dropdown" name="Area" required></select>
+
+				<script>
+					let cityDropdown = $('#city-dropdown');
+					let areaDropdown = $('#locality-dropdown');
+
+					cityDropdown.empty();
+					areaDropdown.empty();
+
+					cityDropdown.append('<option selected="true" disabled></option>');
+					cityDropdown.prop('selectedIndex', 0);
+
+					areaDropdown.append('<option selected="true" disabled></option>');
+					areaDropdown.prop('selectedIndex', 0);
+
+					const urlCities = 'http://localhost/form/citieslist.json';
+					const urlAreas = 'http://localhost/form/areaslist.json';
+
+					// Populate dropdown with list of provinces
+					$.getJSON(urlCities, function (data) {
+						$.each(data, function (key, entry) {
+							cityDropdown.append($('<option></option>').attr('value', entry.abbreviation).text(entry.city));
+						})
+
+					});
+					$.getJSON(urlAreas, function (data) {
+						$.each(data, function (key, entry) {
+
+							areaDropdown.append($('<option></option>').attr('value', entry.abbreviation).text(entry.name));
+
+						})
+
+					});
+
+					function checkInsert() {
+						var url_string = window.location.href;
+						var url = new URL(url_string);
+						var insert = url.searchParams.get("insert");
+						if (insert == 1) {
+							$("#insertSuccess").show();
+						}
+					};
+
+				</script>
+
+
+
+			</div>
+			<div class="box">
+				<label>Street</label><br>
+				<input type="text" name="Address" placeholder="Enter Address of Property" required>
+				<label>Street Number</label>
+				<input type="number" name="AddressNumber" placeholder="Enter the Street Number" required><br>
+				<label>Size</label><br>
+				<input type="number" name="Size" placeholder="Enter Size in squaremeters" required><br>
+				<label>Number of Rooms</label><br>
+				<input type="number" name="Rooms" placeholder="Enter Number of Rooms" required><br>
+				<label id="image-upload-label">Image File: </label><br>
+				<input type="file" name="file_img[]" multiple id="image-upload"><br>
+
+
+				<label class="checkLabel"><input type="radio" id="sellCheck"> I want to sell my property<br>
+					<label class="checkLabel"><input type="radio" id="rentCheck"> I want to rent my property<br>
+
+
+
+			</div>
+
+
+			<div class="box">
+				<div id="revealSell" style="display:none">
+					<label>Selling Price</label><br>
+					<input class="inputRevealSell" id="sellingPrice" type="number" name="sellPrice"
+						placeholder="Enter Selling Price"><br>
+					<label>Description</label><br>
+					<textarea class="inputRevealSell" id="sellD" name='sellDescription'></textarea><br>
+				</div>
+
+				<div id="revealRent" style="display:none">
+					<label>Renting Price</label><br>
+					<input class="inputRevealRent" id="rentingPrice" type="number" name="rentPrice"
+						placeholder="Enter Renting Price"><br>
+					<label>Description</label><br>
+					<textarea class="inputRevealRent" id="rentD" name='rentDescription'></textarea><br>
+				</div>
+			</div>
+
+
+			<script>
+
+
+				$(function () {
+					$("#sellCheck").click(function () {
+						$("#rentCheck").prop("checked", false);
+						$('#rentingPrice').prop('required', false);
+						$('#rentD').prop('required', false);
+						$("#revealRent").hide();
+						$(".inputRevealRent").val('');
+						$(".inputRevealRent").val('');
+						if ($(this).is(":checked")) {
+							$("#revealSell").show();
+							$('#sellingPrice').prop('required', true);
+							$('#sellD').prop('required', true);
+						} else if ($(this).not(":checked")) {
+							$('#sellingPrice').prop('required', false);
+							$('#sellD').prop('required', false);
+							$("#revealSell").hide();
+							$(".inputRevealSell").val('');
+							$(".inputRevealSell").val('');
+						}
+					});
+				});
+
+				$(function () {
+					$("#rentCheck").click(function () {
+						$("#sellCheck").prop("checked", false);
+						$('#sellingPrice').prop('required', false);
+						$('#sellD').prop('required', false);
+						$("#revealSell").hide();
+						$(".inputRevealSell").val('');
+						$(".inputRevealSell").val('');
+						if ($(this).is(":checked")) {
+							$("#revealRent").show();
+							$('#rentingPrice').prop('required', true);
+							$('#rentD').prop('required', true);
+						} else if ($(this).not(":checked")) {
+							$('#rentingPrice').prop('required', false);
+							$('#rentD').prop('required', false);
+							$("#revealRent").hide();
+							$(".inputRevealRent").val('');
+							$(".inputRevealRent").val('');
+						}
+					});
+				});
+
+
+
+				function redirectMe() {
+					window.location.replace("http://localhost/form/connect.php");
+					window.location.replace("http://localhost/form");
+
+				}
+
+
+				// TODO: move this implementation to another function
+				var uploadImage = document.getElementById("image-upload");
+				uploadImage.onchange = function () {
+					$(".bigger-image-warning").empty();
+					// 3000000 bytes = 3 mb
+					for (var i = 0; i < $(this)[0].files.length; i++) {
+						if (this.files[i].size > 3000000) {
+							$("#image-upload-label").append("<div class='bigger-image-warning'>Image must be less than 3mb</div>");
+							this.value = "";
+						};
+					}
+				};
+
+
+
+
+            // $("#contact-form").on('submit',function(event) {
+            //     event.preventDefault(); // to prevent default page reloading
+            //     var dataString = $(this).serialize(); // to get the form data
+
+            //     $.ajax({
+            //         type: "POST",
+            //         url: "form-to-email.php",
+            //         data: dataString,
+            //         success: function(data){
+            //             $('#contact-form')[0].reset(); // to reset form data
+            //         }
+            //     }).done(function(data){
+            //         setTimeout(function () {
+            //             alert("Form submitted successfully! We'll get back to you soon. Thank you.");
+            //         }, 2000);
+            //         //alert("Form submitted successfully! We'll get back to you soon. Thank you."); // This will be called after the ajax executed
+            //     });
+
+            // });
+
+	// 	 $(document).ready(function(){  
+	// 		$('#btn').click(function(){  
+	// 			 var name = $('#name').val();  
+	// 			 var message = $('#message').val();  
+
+	// 				  $.ajax({  
+	// 					   url:"connect.php",  
+	// 					   method:"POST",   
+	// 					   success:function(data){  
+	// 							$("form").trigger("reset");  
+	// 							$('#success_message').fadeIn().html(data);  
+	// 							setTimeout(function(){  
+	// 								 $('#success_message').fadeOut("Slow");  
+	// 							}, 2000);  
+	// 					   }  
+	// 				  });  
+
+	// 		});  
+	//    }); 
+			</script>
+
+
+
+			<div class="block">
+				<input type="submit" name="btn_upload" value="Submit" id="btn"><br>
+
+			</div>
+		</form>
+	</section>
+
+	<!-- <form action="insert_product.php" method="POST" enctype="multipart/form-data">
+		<label>File: </label><input type="file" name="image" />
+		<input type="submit" />
+	</form> -->
+	<!-- <script>
+	function openBox() {
+		document.getElementById("popupBox").style.display = "block";
+	  }
+	  
+	  function closeBox() {
+		document.getElementById("popupBox").style.display = "none";
+	  }
+	</script>
+
+	<div class="popup" id="popupBox">
+		<form action="connect.php" class="popupMessage">
+			<a href=# onclick="closeBox()">OK</a>			
+		</form>
+	</div> -->
+
+
+<!-- Footer -->
+<footer class="page-footer font-small stylish-color-dark pt-4">
+
+		<!-- Footer Links -->
+		<div class="container text-center text-md-left">
+	  
+		  <!-- Grid row -->
+		  <div class="row">
+	  
+			<!-- Grid column -->
+			<div class="col-md-4 mx-auto">
+	  
+			  <!-- Content -->
+			  <h5 class="font-weight-bold text-uppercase mt-3 mb-4"><img src="http://localhost:3000/kleinbot/resources/kleinbot-header-logo-pink-gold2.png" width="200"></h5>
+			  <p>It's funny that pirates were always going around searching for treasure, and they never realized that the real treasure was the fond memories they were creating in their home found at the Pirate Estate.</p>
+	  
+			</div>
+			<!-- Grid column -->
+	  
+			<hr class="clearfix w-100 d-md-none">
+	  
+			<!-- Grid column -->
+			<div class="col-md-2 mx-auto">
+	  
+			  <!-- Links -->
+			  <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Thessaloniki</h5>
+	  
+			 
+	  
+			  <ul class="list-unstyled">
+				
+				<li>
+				  <a href="#!">40 Ekklisies</a>
+				</li>
+				<li>
+				  <a href="#!">Ampelokipoi</a>
+				</li>
+				<li>
+				  <a href="#!">Ano Poli</a>
+				</li>
+				<li>
+				  <a href="#!">Charilaou</a>
+				</li>
+				<li>
+				  <a href="#!">Dendropotamos</a>
+				</li>
+				<li>
+				  <a href="#!">Evosmos</a>
+				</li>
+				<li>
+				  <a href="#!">Finikas</a>
+				</li>
+			  </ul>
+			  
+	  
+			</div>
+			<!-- Grid column -->
+	  
+			<hr class="clearfix w-100 d-md-none">
+	  
+			<!-- Grid column -->
+			<div class="col-md-2 mx-auto">
+	  
+			  <!-- Links -->
+			  <div class="columns23">
+	  
+			  <ul class="list-unstyled">
+				<li>
+				  <a href="#!">Ilioupoli</a>
+				</li>
+				<li>
+				  <a href="#!">Kalamaria</a>
+				</li>
+				<li>
+				  <a href="#!">Kentro</a>
+				</li>
+				<li>
+				  <a href="#!">Kordelio</a>
+				</li>
+				<li>
+				  <a href="#!">Neapoli</a>
+				</li>
+				<li>
+				  <a href="#!">Nea Krini</a>
+				</li>
+				<li>
+				  <a href="#!">Panorama</a>
+				</li>
+			  </ul>
+	  
+			</div>
+		  </div>
+			<!-- Grid column -->
+	  
+			<hr class="clearfix w-100 d-md-none">
+	  
+			<!-- Grid column -->
+			<div class="col-md-2 mx-auto">
+	  
+			  <!-- Links -->
+			  <div class="columns23">
+	  
+			  <ul class="list-unstyled">
+				<li>
+				  <a href="#!">Pylaia</a>
+				</li>
+				<li>
+				  <a href="#!">Sikies</a>
+				</li>
+				<li>
+				  <a href="#!">Stauroupoli</a>
+				</li>
+				<li>
+				  <a href="#!">Thermi</a>
+				</li>
+				<li>
+				  <a href="#!">Toumpa</a>
+				</li>
+				<li>
+				  <a href="#!">Triandria</a>
+				</li>
+				
+			  </ul>
+			</div>
+			</div>
+			<!-- Grid column -->
+	  
+		  </div>
+		  <!-- Grid row -->
+		
+	  
+		</div>
+		<!-- Footer Links -->
+	  
+		
+		<hr>
+		
+	  
+		<!-- Social buttons -->
+		<ul class="list-unstyled list-inline text-center">
+		  <li class="list-inline-item">
+			<a class="btn-floating btn-fb mx-1">
+			  <i class="fab fa-facebook-f"> </i>
+			</a>
+		  </li>
+		  <li class="list-inline-item">
+			<a class="btn-floating btn-tw mx-1">
+			  <i class="fab fa-twitter"> </i>
+			</a>
+		  </li>
+		  <li class="list-inline-item">
+			<a class="btn-floating btn-gplus mx-1">
+			  <i class="fab fa-google-plus-g"> </i>
+			</a>
+		  </li>
+		  <li class="list-inline-item">
+			<a class="btn-floating btn-li mx-1">
+			  <i class="fab fa-linkedin-in"> </i>
+			</a>
+		  </li>
+		  <li class="list-inline-item">
+			<a class="btn-floating btn-dribbble mx-1">
+			  <i class="fab fa-dribbble"> </i>
+			</a>
+		  </li>
+		</ul>
+		<!-- Social buttons -->
+	  
+		
+	  
+		<!-- Copyright -->
+		<div id="copyright" class="footer-copyright text-center py-3">© 2019 Copyright:
+		  <a href="http://localhost:3000/kleinbot"> Pirate Estate</a>
+		</div>
+		<!-- Copyright -->
+	  
+	  </footer>
+	  <!-- Footer -->
+
+
+
+</body>
+
+</html>

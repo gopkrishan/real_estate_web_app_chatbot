@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="styleFilters.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+
+
+</head>
+
+<body>
+    <div id="filterBox">
+        <input type="button" id="filterButton" value="FILTERS" onclick="showFilters()" />
+        <div id="filters" style="display:none;">
+            <form>
+                <div class="columns">
+                    <br>
+                    <label>City: </label>
+                    <select>
+                        <option>Thessaloniki</option>
+                    </select> <br><br><br>
+                    <label>Area: </label>
+                    <select id="locality-dropdown" name="Area"></select><br>
+                </div>
+
+                <div class="columns">
+                    <label>Number of Rooms: </label>
+                    <input type="text" id="rooms" value="0"><br>
+                    <input type="range" min="0" max="10" value="0" name="rooms" class="slider" id="roomSlider"
+                        onchange="updateInput(this.value, name);">
+                    <br><br>
+
+                    <section class="range-slider">
+                        <label>Price range: </label>
+                        <span class="rangeValues"></span>
+                        <input value="1000" min="0" max="100000" step="500" type="range" class="slider" name="minPrice"
+                            onchange="updateInput(this.value,name);">
+                        <input value="50000" min="0" max="100000" step="500" type="range" class="slider" name="maxPrice"
+                            onchange="updateInput(this.value, name);">
+                    </section>
+                    <!-- <input type="text" id="minPrice" value="1000">
+                                <input type="text" id="maxPrice" value="50000"> -->
+                </div>
+
+                <div class="columns">
+                    <section class="range-slider">
+                        <label>Size range in m<sup>2</sup>: </label>
+                        <span class="rangeValues"></span>
+                        <input value="50" min="0" max="200" step="10" type="range" class="slider" name="minSize"
+                            onchange="updateInput(this.value, name);">
+                        <input value="100" min="0" max="200" step="10" type="range" class="slider" name="maxSize"
+                            onchange="updateInput(this.value, name);">
+                    </section>
+                    <!-- <input type="text" id="minSize" value="50">
+                                        <input type="text" id="maxSize" value="100"> -->
+                    <br>
+
+                    <!-- <input type="submit" value="Show Results" id="sbmt"> -->
+                    <div type="submit" value="Show Results" class="show-results"
+                        style="cursor: pointer; border: 1px solid #000;">Show Results</div>
+                </div>
+                <script>
+
+                    $("body").on("click", ".show-results", function () {
+                        var imageID = $(this).parent('.cd-item').attr('id');
+                        // Initialize filter input values
+                        var rooms = $('#rooms').attr('value');
+                        // alert(rooms);
+
+                        getFilterResults(1, 100, 1000000, 0, 1000, "thermi");
+                    });
+
+
+
+
+
+                    function getFilterResults(rooms, minPrice, maxPrice, minSize, maxSize, area) {
+                        $.ajax({
+                            url: 'http://localhost/form/filter_results.php?rooms=' + rooms + '&minPrice=' + minPrice + '&maxPrice=' + maxPrice + '&minSize=' + minSize + '&maxSize=' + maxSize + '&area=' + area,
+                            // url: 'http://localhost/form/filters/testFilters.html?rooms=0&minPrice=1000&maxPrice=50000&minSize=50&maxSize=100',
+                            success: function (response) {
+
+                                // $('#slider-conteiner').empty();
+
+                                var ajaxResult = JSON.parse(response);
+                                console.log(ajaxResult.length);
+                                for (var i = 0; i < ajaxResult.length; i++) {
+                                    console.log(ajaxResult[i].AREA);
+                                    console.log(ajaxResult[i].PRICE);
+                                    console.log(ajaxResult[i].IMAGE_NAME);
+                                    // $('#slider-conteiner').append('<li><img src="http://localhost/form/upload/' + ajaxResult[i].IMAGE_NAME + '"></li>');
+                                    // $('#slider-conteiner li:first').addClass('selected');
+                                    $('#slider-conteiner').append('<li><img src="http://localhost/form/upload/' + ajaxResult[i].IMAGE_NAME + '"></li>');
+                                    $('#slider-conteiner li:first').addClass('selected');
+                                }
+                                // alert(ajaxResult[0].AREA);
+                            }
+                        });
+
+                    }
+                </script>
+
+            </form>
+        </div>
+    </div>
+    <script>
+        function showFilters() {
+            if (document.getElementById('filters').style.display == "none") {
+                document.getElementById('filters').style.display = "block";
+                document.getElementById('filterBox').style.borderBottom = "solid 2px #817b7b";
+                document.getElementById('filterBox').style.borderRight = "solid 2px #817b7b";
+                document.getElementById('filterBox').style.borderLeft = "solid 2px #817b7b";
+            }
+            else {
+                document.getElementById('filters').style.display = "none";
+                document.getElementById('filterBox').style.border = "none";
+            }
+
+        }
+
+
+        function updateInput(val, id) {
+            document.getElementById(id).value = val;
+        }
+
+
+
+
+        let dropdown = $('#locality-dropdown');
+
+        dropdown.empty();
+
+        dropdown.append('<option selected="true" disabled>Choose Area</option>');
+        dropdown.prop('selectedIndex', 0);
+
+        const url1 = 'http://localhost/form/areasList.json';
+
+        // Populate dropdown with list of provinces
+        $.getJSON(url1, function (data) {
+            $.each(data, function (key, entry) {
+                dropdown.append($('<option></option>').attr('value', entry.abbreviation).text(entry.name));
+            })
+        });
+
+
+
+
+        function getVals() {
+            // Get slider values
+            var parent = this.parentNode;
+            var slides = parent.getElementsByTagName("input");
+            var slide1 = parseFloat(slides[0].value);
+            var slide2 = parseFloat(slides[1].value);
+            // Neither slider will clip the other, so make sure we determine which is larger
+            if (slide1 > slide2) { var tmp = slide2; slide2 = slide1; slide1 = tmp; }
+
+            var displayElement = parent.getElementsByClassName("rangeValues")[0];
+            displayElement.innerHTML = slide1 + " - " + slide2;
+        }
+
+        window.onload = function () {
+            // Initialize Sliders
+            var sliderSections = document.getElementsByClassName("range-slider");
+            for (var x = 0; x < sliderSections.length; x++) {
+                var sliders = sliderSections[x].getElementsByTagName("input");
+                for (var y = 0; y < sliders.length; y++) {
+                    if (sliders[y].type === "range") {
+                        sliders[y].oninput = getVals;
+                        // Manually trigger event first time to display values
+                        sliders[y].oninput();
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+
+
+</html>

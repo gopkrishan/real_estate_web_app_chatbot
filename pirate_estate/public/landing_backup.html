@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat Flow</title>
+    <link rel="stylesheet" type="text/css" href="image.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/embed.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="//localhost:3000/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+    <script src="https://cdn.rawgit.com/showdownjs/showdown/1.7.4/dist/showdown.min.js"></script>
+    <script src="client.js"></script>
+    <script src="myscript.js"></script>
+</head>
+
+<body>
+    <header>
+        <img src="https://i.pinimg.com/originals/69/2a/93/692a936336b35254141ada527ec8d662.png" width="80" height="80">
+        <h1>Pirate Estate</h1>
+        <ul>
+            <li><a href="http://localhost:3000">Home</a></li>
+            <li><a href="image.html">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="http://localhost/form">Sell Form</a></li>
+        </ul>
+    </header>
+
+    <div>
+
+    </div>
+
+    <script>
+        console.log(Botkit);
+    </script>
+
+    <button onclick="testLoad()">Click me</button>
+
+    <script>
+        function testLoad() {
+            
+            // parent.location.reload();
+            xhrCall();
+            // var iframe = document.getElementById("botkit_client");
+
+            // window.onbeforeunload = saveCurrentPage;
+            // iframe.onload = setPageToBeforeUnload;
+
+            // function saveCurrentPage() {
+            //     localStorage.setItem("lastPageInIframe", iframe.src);
+            // }
+
+            // function setPageToBeforeUnload() {
+            //     iframe.src = localStorage.getItem("lastPageInIframe");
+            // }
+        }
+    </script>
+
+    <!-- <span>asd</span> -->
+
+    <script>
+        var oReq = new XMLHttpRequest(); //New request object
+        var data;
+        oReq.onload = function () {
+            // oReq.onreadystatechange = function () {
+            //This is where you handle what to do with the response.
+            //The actual data is found on this.responseText
+            if (oReq.readyState === 4 && oReq.status === 200) {
+                // console.log(xhr.responseText);
+                console.log("Response from /botkit/history: "); //Will alert: 42
+                console.log(this.responseText); //Will alert: 42
+                console.log("xhr.status === 200" + oReq.status); //Will alert: 42
+            }
+
+            if (oReq.responseText != "") {
+                data = JSON.parse(oReq.responseText);
+            }
+
+            // Get the first item
+            var firstPost = data[0];  // I dont use it for now
+
+            // console.log(data.history[0]);
+            // Loop through each post
+            var totalData;
+            data.history.forEach(function (post) {
+                if (post == null) {
+                    console.log("/botkit/history is NULL");
+                    // reloadXHR();  //TODO: stop function when history is not null
+                    // fetchdata();
+                }
+                console.log("post.length: " + post.length);
+                totalData = post.length;
+                // $("#response").append("<b>" + post.street + "</b>");
+            });
+
+            console.log("totalData length: " + totalData);
+            // console.log(data.history[0].street[0]);
+            for (var i = 0; i <= totalData; i++) {
+                console.log("length: " + data.history.length);
+                for (var y = 0; y <= totalData; y++) {
+                    $("#response").append("<b style='position: absolute; margin-top: 20px;'>"
+                        + data.history[0][y][i].street + ", "
+                        + data.history[0][y][i + 1].streetNumber + ", "
+                        + data.history[0][y][i + 2].price + ", "
+                        + data.history[0][y][i + 3].size + ", "
+                        + data.history[0][y][i + 4].area + " "
+                        + "</b><br />");
+                }
+            }
+
+
+
+        };
+        oReq.open("post", "http://localhost:3000/botkit/history", true);
+        //                               ^ Don't block the rest of the execution.
+        //                                 Don't wait until the request finishes to 
+        //                                 continue.
+        oReq.send();
+
+    </script>
+
+    <div id="response" style="margin-top: 100px; background: none; display: inline;"></div>
+
+
+    <!--Embedded Chat-->
+    <div id="embedded_messenger">
+        <header id="message_header" onclick="Botkit.toggle()">Chat</header>
+        <iframe id="botkit_client" src="//localhost:3000/chat.html"></iframe>
+    </div>
+    <script src="//localhost:3000/embed.js"></script>
+    <!-- <script src="//localhost:3000/myscript.js"></script> -->
+    <script>
+        var options = {}; // for options, see: https://github.com/howdyai/botkit-starter-web/blob/master/docs/botkit_web_client.md#botkitbootuser
+        Botkit.boot(options);
+    </script>
+    <link rel="stylesheet" href="//localhost:3000/css/embed.css" />
+
+
+    <!-- <style>
+    
+        .myTrigger > div > .message > p{
+            color: red;
+        }
+    
+    </style> -->
+
+
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+body {
+	color: black;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	margin: 0;
+}
+#intro{
+	margin: 4% 0;
+}
+
+
+.container {
+	width: 75%;
+	margin: auto;
+	align-content: center;
+
+}
+
+.box {
+	width: 315px;
+	float: left;
+	/* margin-top:4%;
+	margin-left:15%;  */
+}
+
+label {
+	line-height: 16pt;
+}
+
+input {
+	width: 300px;
+	height: 20px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	margin-bottom: 10px;
+	/* margin: 5px 0;  */
+}
+
+.block {
+	clear: both;
+	margin-left: 30%;
+}
+
+.block input {
+	height: 40px;
+	width: 110px;
+	margin: 50px;
+	margin-left: 20%;
+	font-size: 15px;
+}
+
+textarea {
+	margin: 5px 0;
+	width: 300px;
+	height: 132px;
+}
+
+p {
+	text-align: center;
+}
+
+#bar {
+	line-height: 5px;
+	background: black;
+}
+
+.checkLabel {
+	display: block;
+	padding-left: 15px;
+	text-indent: -35px; 
+	margin:2%;
+}
+
+.checkLabel input {
+	width: 13px;
+	height: 13px;
+	padding: 0;
+	margin: 0;
+	vertical-align: bottom;
+	position: relative;
+	top: -1px;
+	*overflow: hidden;
+}
+
+
+/* Table */
+
+.table-title {
+	margin: 35px auto 0 auto;
+	text-align: center;
+}
+
+.result-table-conteiner {
+	margin: 0 auto;
+}
+
+.table-striped {
+	margin-top: 50px;
+}
+
+.number-result {
+	text-align: center;
+}
+
+/* End Table */
+
+/* Form */
+
+.bigger-image-warning {
+	font-size: 14px;
+	font-weight: 400;
+	color: #CC0000;
+  }
+  
+  /* End Form */
+
+#insertSuccess{
+	text-align: center;
+	background-color: #009900;
+	color:#ffffff;
+}
+#sellCheck{
+	margin-left:20px;
+}
+#image-upload{
+
+}
+
+
+
+  

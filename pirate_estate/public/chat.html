@@ -1,0 +1,82 @@
+<html>
+
+<head>
+  <title>Botkit Anywhere</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+  <script src="https://cdn.rawgit.com/showdownjs/showdown/1.7.4/dist/showdown.min.js"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+  <div class="wrapper">
+
+    <div id="message_window">
+      <div class="disconnected">
+        Disconnected... reconnecting!
+      </div>
+      <div class="offline">
+        Offline! Reload to reconnect.
+      </div>
+      <!-- <div class="powered_by">
+              <button type="button">
+                <a href="chat1.html">Full Screen</a>
+              </button>
+            </div> -->
+      <section>
+        <div id="message_list">
+          <div id="message_template">
+            <div class="message {{message.type}}">
+              {{#if message.isTyping}}
+              <div class="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              {{/if}}
+              {{{message.html}}}
+
+              {{#if message.open_link}}
+              <a href="{{{message.open_link}}}" target="_blank"
+                class="button_message">{{#if message.link_title}}{{message.link_title}}{{else}}{{message.open_link}}{{/if}}</a>
+              {{/if}}
+            </div>
+            {{#message.files}}
+            <div class="file_attachment">
+              {{#if image}}
+              <img src="{{{url}}}" alt="{{{url}}}" />
+              {{else}}
+              <a class="link-class" href="{{{url}}}" title="{{{url}}}">{{{url}}}</a>
+              {{/if}}
+            </div>
+            {{/message.files}}
+          </div>
+        </div>
+      </section>
+      <div id="message_replies">
+      </div>
+      <footer>
+        <form onsubmit="Botkit.send(Botkit.input.value, event)">
+          <input type="text" autocomplete="off" id="messenger_input" placeholder="Type here..." />
+          <!-- <button type="submit">Send</button> -->
+          <button type="submit" id="chatbox-button">
+            <!-- <img src="http://localhost:3000/kleinbot/resources/chatbox-send-icon.png"> -->
+          </button>
+        </form>
+      </footer>
+    </div>
+  </div>
+  <script src="client.js"></script>
+  <script src="//localhost:3000/chatboxscript.js"></script>
+</body>
+
+</html>

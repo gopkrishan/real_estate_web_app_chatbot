@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/png" href="resources/favicon.png" />
+
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+		integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+	<!-- Owl carousel -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.green.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.green.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+
+
+	<link rel="stylesheet" href="css/styleFilters.css">
+	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+	<!-- <script src="js/filter-script.js"></script> -->
+	<link href="js/intro.js-2.9.3/introjs.css" rel="stylesheet">
+
+	<title>KleinBot Chat | Pirate Estate</title>
+</head>
+
+<script>
+	// Show into pop-up
+	$(document).ready(function () {
+		$("#header").load("header.html");
+		$("#footer").load("footer.html");
+		// introJs().start();
+	});
+</script>
+
+<body>
+	<!-- <div class="jumbotron">
+		<a class="btn btn-large btn-success" href="javascript:void(0);" onclick="javascript:introJs().start();">Show me
+			how</a>
+	</div> -->
+
+
+
+	<!-- Start of filter ------------------------------------------------------ -->
+	<div class="main-filters">
+		<div id="header"></div>
+		<!-- <div id="filterButton" class="filter-button nav nav-pills pull-right" data-step="1"
+			data-intro="This is our filters"><span>FILTERS</span><i class="fas fa-plus"></i>
+		</div> -->
+		<div id="filterBox" class="display-filters container">
+			<!-- <input type="button" id="filterButton" value="FILTERS" /> -->
+			<div id="filters" style="display:block;">
+				<form>
+					<div class="columns">
+						<label class="switch row-1">
+							<input id="input-switch" type="checkbox" class="isCheck" checked>
+							<div class="switch-slider">
+								<span id="buy-label">Buy</span>
+								<span id="rent-label">Rent</span>
+							</div>
+						</label>
+						<label class="number-of-rooms">Minimum Rooms:
+							<input type="text" id="rooms" value="1">
+						</label>
+						<input type="range" min="1" max="10" value="1" name="rooms"
+							class="slider roomSlider row-1-slider" id="roomSlider"
+							onclick="updateRoomsNum(this.value, name);">
+					</div>
+
+					<div class="columns">
+						<!-- <label class="row-1">City: </label> -->
+						<select class="row-2">
+							<option>Thessaloniki</option>
+						</select>
+						<section class="range-slider" id="price-range-slider">
+							<label class="number-of-rooms">Price range: </label>
+							<span class="rangeValues" id="price-range"></span><span class="rangeValues">€</span>
+							<input value="0" min="0" max="500000" step="50" type="range"
+								class="slider roomSlider min-slider-buy-flow" id="minPrice" name="minPrice"
+								onclick="updateMinPrice(this.value, name);">
+							<input value="500000" min="0" max="500000" step="50" type="range"
+								class="slider roomSlider max-slider-buy-flow" id="maxPrice" name="maxPrice"
+								onclick="updateMaxPrice(this.value, name);">
+
+							<!-- <input value="0" min="0" max="5000" step="50" type="range" class="slider roomSlider max-slider-rent-flow" 
+								id="minPrice" name="minPrice" onclick="updateMinPrice(this.value, name);">
+							<input value="5000" min="0" max="5000" step="50" type="range" class="slider roomSlider min-slider-rent-flow" 
+    							id="maxPrice" name="maxPrice" onclick="updateMaxPrice(this.value, name);"> -->
+						</section>
+						<!-- <input type="text" id="minPrice" value="1000">
+                                <input type="text" id="maxPrice" value="50000"> -->
+					</div>
+
+					<div class="columns">
+						<!-- <label class="row-1">Area: </label> -->
+						<select class="row-3" id="locality-dropdown" name="Area" required></select>
+						<section class="range-slider">
+							<label class="number-of-rooms">Size range in m<sup>2</sup>: </label>
+							<span class="rangeValues"></span>
+							<input value="50" min="0" max="500" step="10" type="range" class="slider roomSlider"
+								id="minSize" name="minSize" onclick="updateMinSize(this.value, name);">
+							<input value="250" min="0" max="500" step="10" type="range" class="slider roomSlider"
+								id="maxSize" name="maxSize" onclick="updateMaxSize(this.value, name);">
+						</section>
+					</div>
+					<div value="Show Results" class="show-results">Search</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script>
+	</script>
+	<!-- End of filter ------------------------------------------------------ -->
+
+	<div class="section" id="icon_boxes">
+		<div class="container" style="padding-top: 70px">
+			<div class="text-center content icon-boxes">
+				<div class="swiper-container icon-boxes__mobile-carousel swiper-container-horizontal">
+					<div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); display: flex;">
+						<div class="swiper-slide swiper-slide-active"
+							style="width: 373.333px; margin-right: 20px; display: flex;">
+							<div class="icon-boxes__box">
+								<img src="resources/homepage-icon-find-home.png" alt="">
+								<h4>Find the perfect home</h4>
+								<p>Choose advanced search filters according to the criteria you want, to view the
+									results that match your needs.</p>
+							</div>
+						</div>
+						<div class="swiper-slide swiper-slide-next"
+							style="width: 373.333px; margin-right: 20px; display: flex;">
+							<div class="icon-boxes__box">
+								<img src="resources/homepage-icon-any-device.png" alt="">
+								<h4>Search on any device</h4>
+								<p>Explore listings on any smart device thanks to the mobile-friendly design
+									that adapts to any screen size.</p>
+							</div>
+						</div>
+						<div class="swiper-slide" style="width: 373.333px; margin-right: 20px; display: flex;">
+							<div class="icon-boxes__box">
+								<img src="resources/homepage-icon-chatbot.png" alt="">
+								<h4>Sophisticated chatbot</h4>
+								<p>Chat with Kleinbot, our real estate assistant and find the perfect home. 
+									He is polite but be carefull he is still a pirate. Arrr!</p>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="swiper-pagination icon-boxes__pagination swiper-pagination-clickable swiper-pagination-bullets">
+						<span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
+					</div> -->
+				</div>
+			</div>
+		</div>
+		<!--end of container-->
+	</div>
+
+
+
+	<div id="no-properties-message">
+	</div>
+	<!-- <header>
+		<h1>Product Quick View</h1>
+	</header> -->
+	<div class="container">
+		<div id="cd-items-content-title">
+			<span class="area-title">Recent properties</span>
+			<span class="area-count">(6)</span>
+		</div>
+		<ul class="cd-items cd-container" id="main-conteiner">
+			<!-- <li class="cd-item" id="49">
+				<img src="http://localhost/form/upload/item-1.jpg" alt="Item Preview">
+				<a href="#0" class="cd-trigger">Quick View</a>
+			</li> -->
+			<li class="cd-item" id="1"><img src="http://localhost/form/upload/living_room_1.jpg" alt="Item Preview"><a
+					href="#0" class="cd-trigger"><span>Quick View</span></a>
+				<div class="property-info"><span class="property-info-price">110,000</span><span
+						class="property-info-price-sign">€</span><span class="property-info-size">45m<sup>2</sup></span>
+				</div>
+				<div class="property-info-area"><i class="fas fa-map-marker-alt"></i>Kapenta Chapsa 5, Thermi</div>
+			</li>
+			<li class="cd-item" id="5"><img src="http://localhost/form/upload/living_room_5.jpg" alt="Item Preview"><a
+					href="#0" class="cd-trigger"><span>Quick View</span></a>
+				<div class="property-info"><span class="property-info-price">120,000</span><span
+						class="property-info-price-sign">€</span><span
+						class="property-info-size">200m<sup>2</sup></span></div>
+				<div class="property-info-area"><i class="fas fa-map-marker-alt"></i>Pontou 10, Kalamaria</div>
+			</li>
+			<li class="cd-item" id="2"><img src="http://localhost/form/upload/bathroom_3.jpg" alt="Item Preview"><a
+					href="#0" class="cd-trigger"><span>Quick View</span></a>
+				<div class="property-info"><span class="property-info-price">110,500</span><span
+						class="property-info-price-sign">€</span><span class="property-info-size">87m<sup>2</sup></span>
+				</div>
+				<div class="property-info-area"><i class="fas fa-map-marker-alt"></i>Papafi 21, Touba</div>
+			</li>
+			<li class="cd-item" id="2"><img src="http://localhost/form/upload/kitchen_2.jpg" alt="Item Preview"><a
+					href="#0" class="cd-trigger"><span>Quick View</span></a>
+				<div class="property-info"><span class="property-info-price">200,000</span><span
+						class="property-info-price-sign">€</span><span
+						class="property-info-size">199m<sup>2</sup></span></div>
+				<div class="property-info-area"><i class="fas fa-map-marker-alt"></i>Glynou 9, Charilaou</div>
+			</li>
+			<li class="cd-item" id="2"><img src="http://localhost/form/upload/living_room_5.jpg" alt="Item Preview"><a
+					href="#0" class="cd-trigger"><span>Quick View</span></a>
+				<div class="property-info"><span class="property-info-price">140,700</span><span
+						class="property-info-price-sign">€</span><span
+						class="property-info-size">100m<sup>2</sup></span></div>
+				<div class="property-info-area"><i class="fas fa-map-marker-alt"></i>Anaximandrou 101, Charilaou</div>
+			</li>
+			<li class="cd-item" id="2"><img src="http://localhost/form/upload/bedroom_5.jpg" alt="Item Preview"><a
+					href="#0" class="cd-trigger"><span>Quick View</span></a>
+				<div class="property-info"><span class="property-info-price">100,500</span><span
+						class="property-info-price-sign">€</span><span
+						class="property-info-size">171m<sup>2</sup></span></div>
+				<div class="property-info-area"><i class="fas fa-map-marker-alt"></i>Maiandrou 11, Evosmos</div>
+			</li>
+			<!-- cd-item -->
+		</ul> <!-- cd-items -->
+	</div>
+
+	<script>
+		var as = "string";
+	</script>
+
+	<div class="cd-quick-view">
+		<div class="cd-slider-wrapper">
+			<ul class="cd-slider" id="slider-conteiner">
+				<!-- <li class="selected"><img src="http://localhost/form/upload/113699e-Copy.jpg" alt="Product 1"></li>
+				<li><img src="http://localhost/form/upload/item-2.jpg" alt="Product 2"></li>
+				<li><img src="http://localhost/form/upload/item-3.jpg" alt="Product 3"></li> -->
+				<!-- <li><img src="http://localhost/form/upload/Clique Events-Business Card.jpg" alt="Product 3"></li> -->
+			</ul> <!-- cd-slider -->
+
+			<ul class="cd-slider-navigation">
+				<li><a class="cd-next" href="#0">Prev</a></li>
+				<li><a class="cd-prev" href="#0">Next</a></li>
+			</ul> <!-- cd-slider-navigation -->
+		</div> <!-- cd-slider-wrapper -->
+
+		<div class="cd-item-info" id="slider-property-info">
+			<!-- <h2>Produt Title</h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, omnis illo iste ratione. Numquam
+				eveniet quo, ullam itaque expedita impedit. Eveniet, asperiores amet iste repellendus similique
+				reiciendis, maxime laborum praesentium.</p> -->
+
+			<!-- <ul class="cd-item-action">
+				<li><button class="add-to-cart">Add to cart</button></li>
+				<li><a href="#0">Learn more</a></li>
+			</ul>  -->
+			<!-- cd-item-action -->
+		</div> <!-- cd-item-info -->
+		<a href="#0" class="cd-close">Close</a>
+		<div class="cd-item-info cd-item-info-description" id="slider-property-info-description"></div>
+		<div class="cd-item-info cd-item-info-description" id="show-owner-info"></div>
+	</div>
+	<!-- cd-quick-view -->
+
+	<div id="footer"></div>
+
+	<script>
+
+		$("body").on("click", ".cd-trigger", function () {
+			var imageID = $(this).parent('.cd-item').attr('id');
+			showImage(imageID);
+
+			showPropertyInfo(imageID);
+			showPriceDescriptionInfo(imageID);
+			showOwnerInfo(imageID);
+			countProperty(imageID);
+		});
+
+		function showImage(imageID) {
+			$.ajax({
+				url: 'http://localhost/form/image_results.php?pid=' + imageID,
+				success: function (response) {
+
+					$('#slider-conteiner').empty();
+
+					var ajaxResult = JSON.parse(response);
+					console.log(ajaxResult.length);
+					for (var i = 0; i < ajaxResult.length; i++) {
+						console.log(ajaxResult[i].IMAGE_NAME);
+						$('#slider-conteiner').append('<li><img src="http://localhost/form/upload/' + ajaxResult[i].IMAGE_NAME + '"></li>');
+						$('#slider-conteiner li:first').addClass('selected');
+					}
+				}
+			});
+
+		}
+
+		function showPropertyInfo(imageID) {
+			$.ajax({
+				url: 'http://localhost/form/property_results.php?pid=' + imageID,
+				success: function (response) {
+
+					$('#slider-property-info').empty();
+					
+					// $("#cd-items-content-title .area-title").text("Properties from: \"" + data.history[0][0][4].area + "\"");
+					// $('#cd-items-content-title .area-count').empty();
+					// $("#cd-items-content-title .area-count").text("(" + ajaxResult.length + ")");
+
+					var ajaxResult = JSON.parse(response);
+					$('#slider-property-info').append('<h2>' + ajaxResult[0].AREA + '</h2>');
+					$('#slider-property-info').append('<p><i class="fas fa-map-marker-alt"></i>' + ajaxResult[0].STREET + ' ' + ajaxResult[0].STREET_NUMBER + '</p>');
+					$('#slider-property-info').append('<p><i class="fas fa-door-open"></i>' + ajaxResult[0].NUMBER_OF_ROOMS + ' rooms</p>');
+					$('#slider-property-info').append('<p class="property-square-meters"><i class="fas fa-ruler-combined"></i>' + ajaxResult[0].SIZE + ' m<sup>2</sup></p>');
+				}
+			});
+
+		}
+
+		function showPriceDescriptionInfo(imageID) {
+			var ajaxResult;
+			$.ajax({
+				url: 'http://localhost/form/price_description_results.php?pid=' + imageID,
+				success: function (response) {
+					$('#slider-property-info-description').empty();
+
+					ajaxResult = JSON.parse(response);
+					$('#slider-property-info-description').append('<p><i class="fas fa-money-bill-wave"></i>' + ajaxResult[0].PRICE + ' €</p>');
+					$('#slider-property-info-description').append('<p class="property-description"><i class="fas fa-info-circle"></i>' + ajaxResult[0].PROPERTY_DESCRIPTION + '</p>');
+				}
+			});
+		}
+
+		function showOwnerInfo(imageID) {
+			$.ajax({
+				url: 'http://localhost/form/owner_info.php?pid=' + imageID,
+				success: function (response) {
+					$('#show-owner-info').empty();
+
+					var ajaxResult = JSON.parse(response);
+					$('#show-owner-info').append('<button id="owner-info-button" onclick="displayOwnerInfo()">Show owner info</button>');
+
+					$('#show-owner-info').append('<p class="owner-info-name"><i class="fas fa-user-alt"></i>' + ajaxResult[0].FIRST_NAME + ' ' + ajaxResult[0].LAST_NAME + '</p>');
+					$('#show-owner-info').append('<p class="owner-info-name"><i class="fas fa-phone"></i>' + ajaxResult[0].PHONE_NUMBER + '</p>');
+					$('#show-owner-info').append('<p class="owner-info-name"><i class="far fa-envelope-open"></i>' + ajaxResult[0].EMAIL + '</p>');
+				}
+			});
+
+		}
+
+		function displayOwnerInfo() {
+			$('#owner-info-button').remove();
+			$('.owner-info-name').css({ 'display': "block", "margin": "0" });
+		}
+
+		// function countProperty(imageID) {
+		// 	$.ajax({
+		// 		url: 'http://localhost/form/count_property.php?pid=' + imageID,
+		// 		success: function (response) {
+		// 			// $('#show-owner-info').empty();
+
+		// 			var ajaxResult = JSON.parse(response);
+
+
+		// 		}
+		// 	});
+
+		// }
+
+	</script>
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/velocity.min.js"></script>
+	<script src="js/main.js"></script> <!-- Resource jQuery -->
+	<script src="js/filter-script.js"></script>
+
+	<audio id="pop">
+		<source src="unsure.mp3" type="audio/mpeg">
+	</audio>
+
+
+
+	<!--Embedded Chat-->
+	<div id="embedded_messenger" class="filter-button nav nav-pills pull-right" data-step="2"
+		data-intro="This is our chat.">
+		<div class="chatbox-popup-notification"></div>
+		<header id="message_header" onclick="Botkit.toggle()"><img class="chatbox-bot-icon"
+				src="resources/chatbox-bot-icon.png"><span class="chatbox-title">KleinBot Chat</span></header>
+		<iframe id="botkit_client" src="//localhost:3000/chat.html"></iframe>
+	</div>
+	<script src="//localhost:3000/embed.js"></script>
+	<script src="//localhost:3000/chatboxscript.js"></script>
+	<script>
+		var options = {}; // for options, see: https://github.com/howdyai/botkit-starter-web/blob/master/docs/botkit_web_client.md#botkitbootuser
+		Botkit.boot(options);
+	</script>
+	<link rel="stylesheet" href="//localhost:3000/css/embed.css" />
+	<!--End Embedded Chat-->
+
+	<script type="text/javascript" src="js/intro.js-2.9.3/intro.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+
+#embedded_messenger {
+  position: fixed;
+  z-index: 1000;
+  bottom: -400px;
+  right: 2rem;
+  height: 434px;
+  transition: 0.5s ease-in-out bottom; 
+  width: 350px;}
+  #embedded_messenger.active {
+    bottom: 0; }
+  #embedded_messenger iframe {
+    height: 400px;
+    width: 100%;
+    border: 0; }
+  #embedded_messenger #message_header {
+    background: #000;
+    padding: 0.5rem 1rem;
+    color: #eff5f5; }
+
+/*# sourceMappingURL=embed.css.map */
+
+
+
+/* Custom CSS */
+
+#message_window .message p a {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#embedded_messenger #message_header {
+  cursor: pointer;
+  line-height: 45px;
+  font-family: Roboto;
+  font-weight: 600;
+  margin: auto;
+}
+
+#embedded_messenger #message_header:hover {
+  cursor: pointer;
+}
+
+/* FIX: now background is whole black again */
+#embedded_messenger #message_header {
+  width: 100%;
+}
+
+/* FIX: now without chatbox bottom gap */
+#embedded_messenger {
+  height: 460px !important;
+}
+
+
+/* Table */
+
+.table-title {
+	margin: 35px auto 0 auto;
+	text-align: center;
+}
+
+.result-table-conteiner {
+	margin: 0 auto;
+}
+
+.table-striped {
+	margin-top: 50px;
+}
+
+.number-result {
+	text-align: center;
+}
+
+#body-table-row td img {
+  width: 100px;
+  height: auto;
+}
+
+/* End Table */
+
+/* End Custom CSS */

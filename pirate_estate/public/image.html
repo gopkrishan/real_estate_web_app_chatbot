@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat Flow</title>
+    <link rel="stylesheet" type="text/css" href="image.css">
+</head>
+
+<body>
+    <header>
+        <img src="https://i.pinimg.com/originals/69/2a/93/692a936336b35254141ada527ec8d662.png" width="80" height="80">
+        <h1>Pirate Estate</h1>
+        <ul>
+            <li><a href="http://localhost:3000">Home</a></li>
+            <li><a href="image.html">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="http://localhost/form">Entry Form</a></li>
+
+        </ul>
+
+
+    </header>
+    <div>
+        <br>
+    </div>
+    <section>
+        <img src="kleinbot_flow.jpg">
+        <img src="tables.png">
+    </section>
+
+
+
+
+
+    <!--Embedded Chat-->
+    <div id="embedded_messenger">
+        <header id="message_header" onclick="Botkit.toggle()">Chat</header>
+        <iframe id="botkit_client" src="//localhost:3000/chat.html"></iframe>
+    </div>
+    <script src="//localhost:3000/embed.js"></script>
+    <!-- <script src="//localhost:3000/myscript.js"></script> -->
+    <script>
+        var options = {}; // for options, see: https://github.com/howdyai/botkit-starter-web/blob/master/docs/botkit_web_client.md#botkitbootuser
+        Botkit.boot(options);
+    </script>
+    <link rel="stylesheet" href="//localhost:3000/css/embed.css" />
+</body>
+
+</html>

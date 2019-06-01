@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Real Estate Seller Form</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+	<div class="header-conteiner">
+		<header>
+
+			<img src="https://i.pinimg.com/originals/69/2a/93/692a936336b35254141ada527ec8d662.png" width="80"
+				height="80">
+			<h1>Pirate Estate</h1>
+			<ul>
+				<li><a href="http://localhost:3000">Home</a></li>
+				<li><a href="http://localhost:3000/image.html">About</a></li>
+				<li><a href="#">Contact</a></li>
+				<li><a href="http://localhost/form">Entry Form</a></li>
+			</ul>
+		</header>
+	</div>
+
+	<section class="container">
+		<p>Please fill in the form regarding your and your property's information. All fileds are required.</p>
+		<form class="container" method="post" action="connect.php" enctype="multipart/form-data">
+			<div class="box">
+				<label>First Name</label><br>
+				<input type="text" name="Name" placeholder="Enter First Name" required><br>
+				<label>Last Name</label><br>
+				<input type="text" name="LastName" placeholder="Enter Last Name" required><br>
+				<label>Phone Number</label><br>
+				<input type="number" name="Phone" placeholder="Enter Phone Number" required><br>
+				<label>Email</label><br>
+				<input type="email" name="Email" placeholder="Enter Email" required><br>
+				<label>City</label><br>
+				<input type="text" name="City" placeholder="Enter City of Property"><br>
+				<label>Area</label><br>
+				<select id="locality-dropdown" name="Area"></select>
+
+				<script>
+					let dropdown = $('#locality-dropdown');
+
+					dropdown.empty();
+
+					dropdown.append('<option selected="true" disabled>Choose Area</option>');
+					dropdown.prop('selectedIndex', 0);
+
+					const url = 'http://localhost/form/areaslist.json';
+
+					// Populate dropdown with list of provinces
+					$.getJSON(url, function (data) {
+						$.each(data, function (key, entry) {
+							dropdown.append($('<option></option>').attr('value', entry.abbreviation).text(entry.name));
+						})
+					});
+
+				</script>
+
+
+
+			</div>
+			<div class="box">
+				<label>Street</label><br>
+				<input type="text" name="Address" placeholder="Enter Address of Property">
+				<label>Street Number</label>
+				<input type="number" name="AddressNumber" placeholder="Enter the Street Number"><br>
+				<label>Size</label><br>
+				<input type="number" name="Size" placeholder="Enter Size in squaremeters"><br>
+				<label>Number of Rooms</label><br>
+				<input type="number" name="Rooms" placeholder="Enter Number of Rooms"><br>
+				<label id="image-upload-label">Image File: </label><br>
+				<input type="file" name="file_img[]" multiple id="image-upload"><br>
+
+
+
+				<label class="checkLabel"><input type="checkbox" id="sellCheck" onclick="showMe(revealSell)"> I want to
+					sell my property</label><br>
+				<label class="checkLabel"><input type="checkbox" id="rentCheck" onclick="showMe(revealRent)"> I want to
+					rent my property</label><br>
+
+			</div>
+
+			<div class="box">
+				<div id="revealSell" style="display:none">
+					<label>Selling Price</label><br>
+					<input class="inputRevealSell" type="number" name="sellPrice" placeholder="Enter Selling Price"><br>
+					<label>Description</label><br>
+					<textarea class="inputRevealSell" name='sellDescription'></textarea><br>
+				</div>
+
+				<div id="revealRent" style="display:none">
+					<label>Renting Price</label><br>
+					<input class="inputRevealRent" type="number" name="rentPrice" placeholder="Enter Renting Price"><br>
+					<label>Description</label><br>
+					<textarea class="inputRevealRent" name='rentDescription'></textarea><br>
+				</div>
+			</div>
+
+
+			<script>
+
+
+
+				$(function () {
+					$("#sellCheck ").click(function () {
+						if ($(this).is(":checked")) {
+							$("#revealSell").show();
+						} else if ($(this).not(":checked")) {
+							$("#revealSell").hide();
+							$(".inputRevealSell").val('');
+							$(".inputRevealSell").val('');
+						}
+					});
+				});
+
+				$(function () {
+					$("#rentCheck").click(function () {
+						if ($(this).is(":checked")) {
+							$("#revealRent").show();
+						} else if ($(this).not(":checked")) {
+							$("#revealRent").hide();
+							$(".inputRevealRent").val('');
+							$(".inputRevealRent").val('');
+						}
+					});
+				});
+
+				function redirectMe() {
+					window.location.replace("http://localhost/form/connect.php");
+					window.location.replace("http://localhost/form");
+
+				}
+
+
+				// TODO: move this implementation to another function
+				var uploadImage = document.getElementById("image-upload");
+				uploadImage.onchange = function () {
+					$(".bigger-image-warning").empty();
+					// 3000000 bytes = 3 mb
+					for(var i = 0; i < $(this)[0].files.length; i++){
+						if (this.files[i].size > 3000000) {
+							$("#image-upload-label").append("<div class='bigger-image-warning'>Image must be less than 3mb</div>");
+							this.value = "";
+						};
+					}
+				};
+			</script>
+
+
+			<div class="block">
+				<input type="submit" name="btn_upload" value="Submit" id="btn"><br>
+
+			</div>
+		</form>
+	</section>
+
+	<!-- <form action="insert_product.php" method="POST" enctype="multipart/form-data">
+		<label>File: </label><input type="file" name="image" />
+		<input type="submit" />
+	</form> -->
+
+</body>
+
+</html>

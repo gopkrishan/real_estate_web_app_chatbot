@@ -1,0 +1,158 @@
+body {
+	color: black;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	margin: 0;
+}
+
+.header-conteiner {
+	border-bottom: 5px solid #000;
+	background: #862d2d;
+}
+
+header {
+	text-align: center;
+	margin: 0;
+	padding-top: 15px;
+	padding-bottom: 30px;
+	margin: 0 20px;
+}
+
+header h1 {
+	font-size: 3rem;
+	margin: 0;
+	padding: 0;
+	font-family: Roboto;
+	color: #000;
+}
+
+header ul {
+	/* background: #862d2d; */
+	/* margin-right: 35px; */
+	padding-top: 0;
+	margin-top: 0;
+	padding-bottom: 4px;
+	margin-bottom: 0;
+	float: right;
+}
+
+li {
+	list-style-type: none;
+	display: inline;
+	padding: 0px 7px;
+	font-size: 20px;
+}
+
+header ul a {
+	color: #000;
+	text-decoration: none;
+	font-family: Roboto;
+	font-weight: 600;
+}
+
+header a:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+.container {
+	width: 75%;
+	margin: auto;
+}
+
+.box {
+	width: 315px;
+	float: left;
+	/* margin-top:4%;
+	margin-left:15%;  */
+}
+
+label {
+	line-height: 16pt;
+}
+
+input {
+	width: 300px;
+	height: 20px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	margin-bottom: 10px;
+	/* margin: 5px 0;  */
+}
+
+.block {
+	clear: both;
+	margin-left: 30%;
+}
+
+.block input {
+	height: 40px;
+	width: 110px;
+	margin: 50px;
+	margin-left: 20%;
+	font-size: 15px;
+}
+
+textarea {
+	margin: 5px 0;
+	width: 300px;
+	height: 132px;
+}
+
+p {
+	text-align: center;
+}
+
+#bar {
+	line-height: 5px;
+	background: black;
+}
+
+.checkLabel {
+	display: block;
+	padding-left: 15px;
+	text-indent: -15px;
+}
+
+.checkLabel input {
+	width: 13px;
+	height: 13px;
+	padding: 0;
+	margin: 0;
+	vertical-align: bottom;
+	position: relative;
+	top: -1px;
+	*overflow: hidden;
+}
+
+
+/* Table */
+
+.table-title {
+	margin: 35px auto 0 auto;
+	text-align: center;
+}
+
+.result-table-conteiner {
+	margin: 0 auto;
+}
+
+.table-striped {
+	margin-top: 50px;
+}
+
+.number-result {
+	text-align: center;
+}
+
+/* End Table */
+
+/* Form */
+
+.bigger-image-warning {
+	font-size: 14px;
+	font-weight: 400;
+	color: #CC0000;
+  }
+  
+  /* End Form */
